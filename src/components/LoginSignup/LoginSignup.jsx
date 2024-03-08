@@ -34,16 +34,12 @@ const LoginSignup = () => {
   };
 
   useEffect(() => {
-    if (
-      (action === "Login") &
-      (formValues.email !== "") &
-      (formValues.password !== "")
-    ) {
+    if (action === "Login" && formValues.email && formValues.password) {
       console.log("login true");
-      history("/questions");
+      history("/questions", { state: formValues });
     }
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      history("/questions");
+      history("/questions", { state: formValues });
     }
   }, [formErrors]);
 
@@ -69,79 +65,79 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="container">
-      {/* <pre>{JSON.stringify(formValues, undefined, 2)}</pre> */}
+    <div className="loginContainer">
+      <div className="container">
+        <div className="header">
+          <div className="text">{action}</div>
+          <div className="underline"></div>
+        </div>
 
-      <div className="header">
-        <div className="text">{action}</div>
-        <div className="underline"></div>
-      </div>
-
-      <div className="inputs">
-        {action === "Login" ? (
-          <div></div>
-        ) : (
+        <div className="inputs">
+          {action === "Login" ? (
+            <div></div>
+          ) : (
+            <div className="input">
+              <img src={user_icon} alt="" />
+              <input
+                type="text"
+                name="username"
+                placeholder="Name"
+                value={formValues.username}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+          {action === "Login" ? (
+            <p></p>
+          ) : (
+            <p className="errorinput">{formErrors.username}</p>
+          )}
           <div className="input">
-            <img src={user_icon} alt="" />
+            <img src={email_icon} alt="" />
             <input
-              type="text"
-              name="username"
-              placeholder="Name"
-              value={formValues.username}
+              type="email"
+              name="email"
+              placeholder="Email ID"
+              value={formValues.email}
               onChange={handleChange}
             />
           </div>
-        )}
-        {action === "Login" ? (
-          <p></p>
+          <p className="errorinput">{formErrors.email}</p>
+          <div className="input">
+            <img src={password_icon} alt="" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formValues.password}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <p className="errorinputpswd">{formErrors.password}</p>
+        {action === "Sign Up" ? (
+          <div></div>
         ) : (
-          <p className="errorinput">{formErrors.username}</p>
+          <div className="forgot-password">
+            Lost Password?
+            <span> Click here!</span>
+          </div>
         )}
-        <div className="input">
-          <img src={email_icon} alt="" />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email ID"
-            value={formValues.email}
-            onChange={handleChange}
-          />
-        </div>
-        <p className="errorinput">{formErrors.email}</p>
-        <div className="input">
-          <img src={password_icon} alt="" />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formValues.password}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-      <p className="errorinputpswd">{formErrors.password}</p>
-      {action === "Sign Up" ? (
-        <div></div>
-      ) : (
-        <div className="forgot-password">
-          Lost Password?
-          <span> Click here!</span>
-        </div>
-      )}
 
-      <div className="submit-container">
-        <div
-          className={action === "Login" ? "submit gray" : "submit"}
-          onClick={handleSignup}
-        >
-          Sign Up
-        </div>
+        <div className="submit-container">
+          <div
+            className={action === "Login" ? "submit gray" : "submit"}
+            onClick={handleSignup}
+          >
+            Sign Up
+          </div>
 
-        <div
-          className={action === "Sign Up" ? "submit gray" : "submit"}
-          onClick={handleLogin}
-        >
-          Login
+          <div
+            className={action === "Sign Up" ? "submit gray" : "submit"}
+            onClick={handleLogin}
+          >
+            Login
+          </div>
         </div>
       </div>
     </div>

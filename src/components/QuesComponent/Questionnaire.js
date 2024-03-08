@@ -1,6 +1,6 @@
 // Questionnaire.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Question from "./Question";
 
 const questions = [
@@ -16,7 +16,10 @@ function Questionnaire() {
   console.log("Questionnaireanswers", answers);
   const [currentStep, setCurrentStep] = useState(0);
   const history = useNavigate();
+  const location = useLocation();
 
+  const profileInfo = location.state;
+  console.log("location", profileInfo.email);
   const handleAnswerSubmit = (answer) => {
     const newAnswers = [...answers];
     newAnswers[currentStep] = answer;
@@ -33,6 +36,7 @@ function Questionnaire() {
 
   return (
     <div>
+      <div>header {profileInfo?.email}</div>
       <h1>Question {currentStep + 1}</h1>
       <Question
         question={questions[currentStep]}
